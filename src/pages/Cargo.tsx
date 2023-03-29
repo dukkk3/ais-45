@@ -41,15 +41,15 @@ export const Cargo: React.FC = () => {
 
 		const values = $createCargoForm.$values.getState();
 
-		cargoService
-			.create({
-				weight: Number(values.weight),
-				width: Number(values.width),
-				height: Number(values.height),
-				depth: Number(values.depth),
-				loadingPlanId: Number(values.loadingPlanId),
-			})
-			.then(updateList);
+		// cargoService
+		// 	.create({
+		// 		weight: Number(values.weight),
+		// 		width: Number(values.width),
+		// 		height: Number(values.height),
+		// 		depth: Number(values.depth),
+		// 		loadingPlanId: Number(values.loadingPlanId),
+		// 	})
+		// 	.then(updateList);
 	}, []);
 
 	useEffect(() => {
@@ -59,7 +59,7 @@ export const Cargo: React.FC = () => {
 	return (
 		<div>
 			<Navigation />
-			<form onSubmit={handleCreateCargoFormSubmit} style={{ borderBottom: "1px solid white" }}>
+			{/* <form onSubmit={handleCreateCargoFormSubmit} style={{ borderBottom: "1px solid white" }}>
 				<input {...bindField(createCargoForm.fields.width)} type='number' placeholder='Ширина' />
 				<input {...bindField(createCargoForm.fields.height)} type='number' placeholder='Высота' />
 				<input {...bindField(createCargoForm.fields.depth)} type='number' placeholder='Глубина' />
@@ -70,24 +70,30 @@ export const Cargo: React.FC = () => {
 					placeholder='ID плана загрузки'
 				/>
 				<button type='submit'>Создать</button>
-			</form>
+			</form> */}
 			<table style={{ width: "100%" }}>
-				<tr>
-					<th>ID</th>
-					<th>Вес</th>
-					<th>Ширина</th>
-					<th>Высота</th>
-					<th>Глубина</th>
-				</tr>
-				{cargos.map((cargo) => (
-					<tr key={cargo.id}>
-						<td>{cargo.id}</td>
-						<td>{cargo.weight}</td>
-						<td>{cargo.width}</td>
-						<td>{cargo.height}</td>
-						<td>{cargo.depth}</td>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>ID плана загрузки</th>
+						<th>Вес</th>
+						<th>Ширина</th>
+						<th>Высота</th>
+						<th>Глубина</th>
 					</tr>
-				))}
+				</thead>
+				<tbody>
+					{cargos.map((cargo) => (
+						<tr key={cargo.id}>
+							<td>{cargo.id}</td>
+							<td>{cargo.loadingPlanId}</td>
+							<td>{cargo.weight}</td>
+							<td>{cargo.width}</td>
+							<td>{cargo.height}</td>
+							<td>{cargo.depth}</td>
+						</tr>
+					))}
+				</tbody>
 			</table>
 		</div>
 	);

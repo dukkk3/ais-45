@@ -6,11 +6,13 @@ export interface Cargo {
 	width: number;
 	height: number;
 	depth: number;
-}
-
-interface CreateCargoData extends Omit<Cargo, "id"> {
+	x: number;
+	y: number;
+	z: number;
 	loadingPlanId: number;
 }
+
+interface CreateCargoData extends Omit<Cargo, "id"> {}
 
 export const getAll = () => api.get<{ data: Cargo[] }>("/cargo/all");
 export const create = (data: CreateCargoData) => api.post<{ data: Cargo[] }>("/cargo", data);

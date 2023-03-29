@@ -7,6 +7,7 @@ import { AuthGuard } from "./pages/AuthGuard";
 import { NonAuthGuard } from "./pages/NonAuthGuard";
 import { Cargo } from "./pages/Cargo";
 import { Vehicle } from "./pages/Vehicle";
+import { Exit } from "./pages/Exit";
 
 const router = createHashRouter([
 	{
@@ -16,6 +17,10 @@ const router = createHashRouter([
 				<Cargo />
 			</AuthGuard>
 		),
+	},
+	{
+		path: "/logout",
+		element: <Exit />,
 	},
 	{
 		path: "/login",

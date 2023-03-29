@@ -63,22 +63,26 @@ export const Vehicle: React.FC = () => {
 				<button type='submit'>Создать</button>
 			</form>
 			<table style={{ width: "100%" }}>
-				<tr>
-					<th>ID</th>
-					<th>Вес</th>
-					<th>Ширина</th>
-					<th>Высота</th>
-					<th>Глубина</th>
-				</tr>
-				{vehicles.map((vehicle) => (
-					<tr key={vehicle.id}>
-						<td>{vehicle.id}</td>
-						<td>{vehicle.weight}</td>
-						<td>{vehicle.width}</td>
-						<td>{vehicle.height}</td>
-						<td>{vehicle.depth}</td>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Вес</th>
+						<th>Ширина</th>
+						<th>Высота</th>
+						<th>Глубина</th>
 					</tr>
-				))}
+				</thead>
+				<tbody>
+					{vehicles.map((vehicle) => (
+						<tr key={vehicle.id}>
+							<td>{vehicle.id}</td>
+							<td>{vehicle.weight}</td>
+							<td>{vehicle.width}</td>
+							<td>{vehicle.height}</td>
+							<td>{vehicle.depth}</td>
+						</tr>
+					))}
+				</tbody>
 			</table>
 		</div>
 	);
