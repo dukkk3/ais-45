@@ -25,12 +25,16 @@ export const Login: React.FC = () => {
 
 	const handleFormSubmit = useCallback(async (event: React.FormEvent) => {
 		event.preventDefault();
-		const {
-			data: {
-				data: { token },
-			},
-		} = await authService.login(authForm.$values.getState());
-		actions.setAuthToken(token);
+		try {
+			const {
+				data: {
+					data: { token },
+				},
+			} = await authService.login(authForm.$values.getState());
+			actions.setAuthToken(token);
+		} catch (error) {
+			alert("Ошибка авторизации");
+		}
 	}, []);
 
 	return (
@@ -38,10 +42,10 @@ export const Login: React.FC = () => {
 			<AuthNavigation />
 			<form onSubmit={handleFormSubmit}>
 				<div>
-					<input {...bindField(form.fields.login)} placeholder='Логин' />
+					<input {...bindField(form.fields.login)} placeholder='Логин' required />
 				</div>
 				<div>
-					<input {...bindField(form.fields.password)} placeholder='Пароль' />
+					<input {...bindField(form.fields.password)} placeholder='Пароль' required />
 				</div>
 				<button type='submit'>Войти</button>
 			</form>

@@ -33,8 +33,13 @@ export const Signin: React.FC = () => {
 
 	const handleFormSubmit = useCallback(async (event: React.FormEvent) => {
 		event.preventDefault();
-		await authService.signin(authForm.$values.getState());
-		navigate("/login");
+
+		try {
+			await authService.signin(authForm.$values.getState());
+			navigate("/login");
+		} catch (error) {
+			alert("Ошибка регистрации");
+		}
 	}, []);
 
 	return (

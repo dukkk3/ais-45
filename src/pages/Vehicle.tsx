@@ -56,10 +56,34 @@ export const Vehicle: React.FC = () => {
 		<div>
 			<Navigation />
 			<form onSubmit={handleCreateVehicleFormSubmit} style={{ borderBottom: "1px solid white" }}>
-				<input {...bindField(createVehicleForm.fields.width)} type='number' placeholder='Ширина' />
-				<input {...bindField(createVehicleForm.fields.height)} type='number' placeholder='Высота' />
-				<input {...bindField(createVehicleForm.fields.depth)} type='number' placeholder='Глубина' />
-				<input {...bindField(createVehicleForm.fields.weight)} type='number' placeholder='Вес' />
+				<input
+					{...bindField(createVehicleForm.fields.width)}
+					type='number'
+					placeholder='Ширина'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createVehicleForm.fields.height)}
+					type='number'
+					placeholder='Высота'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createVehicleForm.fields.depth)}
+					type='number'
+					placeholder='Глубина'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createVehicleForm.fields.weight)}
+					type='number'
+					placeholder='Вес'
+					min='1'
+					required
+				/>
 				<button type='submit'>Создать</button>
 			</form>
 			<table style={{ width: "100%" }}>

@@ -81,10 +81,34 @@ export const LoadingPlan: React.FC = () => {
 		<div>
 			<Navigation />
 			<form onSubmit={handleCreateLoadingPlanFormSubmit} style={{ borderBottom: "1px solid white" }}>
-				<input {...bindField(createLoadingPlanForm.fields.width)} type='number' placeholder='Ширина' />
-				<input {...bindField(createLoadingPlanForm.fields.height)} type='number' placeholder='Высота' />
-				<input {...bindField(createLoadingPlanForm.fields.depth)} type='number' placeholder='Глубина' />
-				<input {...bindField(createLoadingPlanForm.fields.weight)} type='number' placeholder='Вес' />
+				<input
+					{...bindField(createLoadingPlanForm.fields.width)}
+					type='number'
+					placeholder='Ширина'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createLoadingPlanForm.fields.height)}
+					type='number'
+					placeholder='Высота'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createLoadingPlanForm.fields.depth)}
+					type='number'
+					placeholder='Глубина'
+					min='1'
+					required
+				/>
+				<input
+					{...bindField(createLoadingPlanForm.fields.weight)}
+					type='number'
+					placeholder='Вес'
+					min='1'
+					required
+				/>
 				<button type='submit'>Создать</button>
 			</form>
 			<table style={{ width: "100%" }}>
@@ -124,6 +148,7 @@ export const LoadingPlan: React.FC = () => {
 					{...bindField(updateLoadingPlanForm.fields.vehicleId)}
 					type='text'
 					placeholder='ID машины'
+					required
 				/>
 				<button type='submit'>Передать в обработку</button>
 			</form>
