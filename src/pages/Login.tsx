@@ -42,10 +42,15 @@ export const Login: React.FC = () => {
 			<AuthNavigation />
 			<form onSubmit={handleFormSubmit}>
 				<div>
-					<input {...bindField(form.fields.login)} placeholder='Логин' required />
+					<input
+						{...bindField(form.fields.login)}
+						placeholder='Логин'
+						required
+						pattern='^[A-Za-z0-9_]+$'
+					/>
 				</div>
 				<div>
-					<input {...bindField(form.fields.password)} placeholder='Пароль' required />
+					<input {...bindField(form.fields.password)} type='password' placeholder='Пароль' required />
 				</div>
 				<button type='submit'>Войти</button>
 			</form>

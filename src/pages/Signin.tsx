@@ -47,19 +47,39 @@ export const Signin: React.FC = () => {
 			<AuthNavigation />
 			<form onSubmit={handleFormSubmit}>
 				<div>
-					<input {...bindField(form.fields.login)} placeholder='Логин' />
+					<input
+						{...bindField(form.fields.login)}
+						placeholder='Логин'
+						required
+						pattern='^[A-Za-z0-9_]+$'
+					/>
 				</div>
 				<div>
-					<input {...bindField(form.fields.password)} placeholder='Пароль' />
+					<input {...bindField(form.fields.password)} placeholder='Пароль' required />
 				</div>
 				<div>
-					<input {...bindField(form.fields.firstName)} placeholder='Имя' />
+					<input
+						{...bindField(form.fields.firstName)}
+						placeholder='Имя'
+						required
+						pattern='^[A-Za-zА-Яа-я ]+$'
+					/>
 				</div>
 				<div>
-					<input {...bindField(form.fields.secondName)} placeholder='Фамилия' />
+					<input
+						{...bindField(form.fields.secondName)}
+						placeholder='Фамилия'
+						required
+						pattern='^[A-Za-zА-Яа-я ]+$'
+					/>
 				</div>
 				<div>
-					<input {...bindField(form.fields.middleName)} placeholder='Отчество' />
+					<input
+						{...bindField(form.fields.middleName)}
+						placeholder='Отчество'
+						required
+						pattern='^[A-Za-zА-Яа-я ]+$'
+					/>
 				</div>
 				<button type='submit'>Зарегистрироваться</button>
 			</form>
