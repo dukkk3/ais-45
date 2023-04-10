@@ -5,19 +5,9 @@ import { Signin } from "./pages/Signin";
 import { LoadingPlan } from "./pages/LoadingPlan";
 import { AuthGuard } from "./pages/AuthGuard";
 import { NonAuthGuard } from "./pages/NonAuthGuard";
-import { Cargo } from "./pages/Cargo";
-import { Vehicle } from "./pages/Vehicle";
 import { Exit } from "./pages/Exit";
 
 const router = createHashRouter([
-	{
-		path: "/",
-		element: (
-			<AuthGuard>
-				<Cargo />
-			</AuthGuard>
-		),
-	},
 	{
 		path: "/logout",
 		element: <Exit />,
@@ -39,18 +29,10 @@ const router = createHashRouter([
 		),
 	},
 	{
-		path: "/loading-plan",
+		path: "/",
 		element: (
 			<AuthGuard>
 				<LoadingPlan />
-			</AuthGuard>
-		),
-	},
-	{
-		path: "/vehicle",
-		element: (
-			<AuthGuard>
-				<Vehicle />
 			</AuthGuard>
 		),
 	},

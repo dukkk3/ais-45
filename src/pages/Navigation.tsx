@@ -5,12 +5,7 @@ export const Navigation: React.FC = () => {
 
 	return (
 		<div>
-			{[
-				{ name: "Упаковки", path: "/" },
-				{ name: "Машины", path: "/vehicle" },
-				{ name: "Планы загрузок", path: "/loading-plan" },
-				{ name: "Выйти", path: "/logout" },
-			].map(({ name, path }) => (
+			{[{ name: "Выйти", path: "/logout" }].map(({ name, path }) => (
 				<Link to={path} key={path}>
 					<button type='button' style={{ background: path === location.pathname ? "blue" : undefined }}>
 						{name}

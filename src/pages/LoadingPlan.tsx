@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { createForm, useForm } from "effector-forms";
+import dayjs from "dayjs";
 
 import { loadingPlanService } from "../core/services";
 import { bindField } from "../core/helpers";
@@ -8,16 +9,10 @@ import { Navigation } from "./Navigation";
 
 const $createLoadingPlanForm = createForm({
 	fields: {
-		width: {
+		name: {
 			init: "",
 		},
-		height: {
-			init: "",
-		},
-		weight: {
-			init: "",
-		},
-		depth: {
+		expiresOn: {
 			init: "",
 		},
 	},
@@ -25,10 +20,7 @@ const $createLoadingPlanForm = createForm({
 
 const $updateLoadingPlanForm = createForm({
 	fields: {
-		ids: {
-			init: "",
-		},
-		vehicleId: {
+		whenLessDays: {
 			init: "",
 		},
 	},
@@ -52,10 +44,8 @@ export const LoadingPlan: React.FC = () => {
 
 		loadingPlanService
 			.create({
-				weight: Number(values.weight),
-				width: Number(values.width),
-				height: Number(values.height),
-				depth: Number(values.depth),
+				name: values.name,
+				expiresOn: dayjs(values.expiresOn).format("YYYY-MM-DD"),
 			})
 			.then(updateList);
 	}, []);
@@ -66,9 +56,8 @@ export const LoadingPlan: React.FC = () => {
 		const values = $updateLoadingPlanForm.$values.getState();
 
 		loadingPlanService
-			.update({
-				ids: values.ids.split(",").map((i) => Number(i.trim())),
-				vehicleId: Number(values.vehicleId),
+			.processAll({
+				whenLessDays: Number(values.whenLessDays),
 			})
 			.then(updateList);
 	}, []);
@@ -80,34 +69,29 @@ export const LoadingPlan: React.FC = () => {
 	return (
 		<div>
 			<Navigation />
-			<form onSubmit={handleCreateLoadingPlanFormSubmit} style={{ borderBottom: "1px solid white" }}>
+			<h1>Грузы</h1>
+			<form
+				onSubmit={handleCreateLoadingPlanFormSubmit}
+				style={{
+					border: "1px solid black",
+					padding: "1rem",
+					borderRadius: "1rem",
+					marginBottom: "1rem",
+				}}>
+				<p>Создание</p>
 				<input
-					{...bindField(createLoadingPlanForm.fields.width)}
-					type='number'
-					placeholder='Ширина'
-					min='1'
+					{...bindField(createLoadingPlanForm.fields.name)}
+					type='text'
+					placeholder='Название'
 					required
+					style={{ marginRight: "1rem" }}
 				/>
 				<input
-					{...bindField(createLoadingPlanForm.fields.height)}
-					type='number'
-					placeholder='Высота'
-					min='1'
+					{...bindField(createLoadingPlanForm.fields.expiresOn)}
+					type='date'
+					placeholder='До какого числа годен'
 					required
-				/>
-				<input
-					{...bindField(createLoadingPlanForm.fields.depth)}
-					type='number'
-					placeholder='Глубина'
-					min='1'
-					required
-				/>
-				<input
-					{...bindField(createLoadingPlanForm.fields.weight)}
-					type='number'
-					placeholder='Вес'
-					min='1'
-					required
+					style={{ marginRight: "1rem" }}
 				/>
 				<button type='submit'>Создать</button>
 			</form>
@@ -115,67 +99,35 @@ export const LoadingPlan: React.FC = () => {
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Вес</th>
-						<th>Ширина</th>
-						<th>Высота</th>
-						<th>Глубина</th>
+						<th>Название</th>
+						<th>До конца срока годности</th>
+						<th>В обработке</th>
 					</tr>
 				</thead>
 				<tbody>
-					{loadingPlans
-						.filter((loadingPlan) => !loadingPlan.needProcess)
-						.map((vehicle) => (
-							<tr key={vehicle.id}>
-								<td>{vehicle.id}</td>
-								<td>{vehicle.weight}</td>
-								<td>{vehicle.width}</td>
-								<td>{vehicle.height}</td>
-								<td>{vehicle.depth}</td>
-							</tr>
-						))}
+					{loadingPlans.map((loadingPlan) => (
+						<tr key={loadingPlan.id}>
+							<th>{loadingPlan.id}</th>
+							<th>{loadingPlan.name}</th>
+							<th>{dayjs(loadingPlan.expiresOn).diff(dayjs(), "days")}</th>
+							<th>{loadingPlan.processed ? "Да" : "Нет"}</th>
+						</tr>
+					))}
 				</tbody>
 			</table>
-			<p>Планы загрузок на отправку</p>
+			<p>Отправка на отгрузку</p>
 			<form
 				onSubmit={handleUpdateLoadingPlanFormSubmit}
 				style={{ display: "flex", alignItems: "center", borderBottom: "1px solid white" }}>
 				<input
-					{...bindField(updateLoadingPlanForm.fields.ids)}
-					type='text'
-					placeholder='ID планов загрузки через запятую'
-				/>
-				<input
-					{...bindField(updateLoadingPlanForm.fields.vehicleId)}
-					type='text'
-					placeholder='ID машины'
+					{...bindField(updateLoadingPlanForm.fields.whenLessDays)}
+					type='number'
+					placeholder='Количество дней до истечения срока годности'
 					required
+					min='0'
 				/>
 				<button type='submit'>Передать в обработку</button>
 			</form>
-			<table style={{ width: "100%" }}>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Вес</th>
-						<th>Ширина</th>
-						<th>Высота</th>
-						<th>Глубина</th>
-					</tr>
-				</thead>
-				<tbody>
-					{loadingPlans
-						.filter((loadingPlan) => loadingPlan.needProcess)
-						.map((vehicle) => (
-							<tr key={vehicle.id}>
-								<td>{vehicle.id}</td>
-								<td>{vehicle.weight}</td>
-								<td>{vehicle.width}</td>
-								<td>{vehicle.height}</td>
-								<td>{vehicle.depth}</td>
-							</tr>
-						))}
-				</tbody>
-			</table>
 		</div>
 	);
 };
